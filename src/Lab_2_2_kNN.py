@@ -15,7 +15,7 @@ def raiz(n:int,p:int):
         p (int): Tipo de raíz
     """    
     exponente = 1 / p
-    return round (n ** exponente, 3)
+    return n ** exponente
 
 
 def minkowski_distance(a, b, p=2):
@@ -62,7 +62,16 @@ class knn:
             k (int, optional): Number of neighbors to use. Defaults to 5.
             p (int, optional): The degree of the Minkowski distance. Defaults to 2.
         """
-        # TODO
+        if len(X_train) != len(y_train):
+            raise ValueError('Length of X_train and y_train must be equal.')
+        
+        if k < 0  or p < 0:
+            raise ValueError('k and p must be positive integers.')
+
+        self.k = k
+        self.p = p
+        self.x_train = X_train
+        self.y_train = y_train
 
     def predict(self, X: np.ndarray) -> np.ndarray:
         """
@@ -74,7 +83,8 @@ class knn:
         Returns:
             np.ndarray: Predicted class labels.
         """
-        # TODO
+        for xi in X:
+            distances = [minkowski_distance(xi,Xi) for Xi in self.x]
 
     def predict_proba(self, X):
         """
