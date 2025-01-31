@@ -4,6 +4,18 @@ import matplotlib.pyplot as plt
 sns.set_theme()
 import numpy as np  
 import seaborn as sns
+from decimal import Decimal
+
+
+def raiz(n:int,p:int):
+    """Función auxiliar de minkowski_distance que hace la raiz de un número.
+
+    Args:
+        n (int): Número del que se hace la raíz
+        p (int): Tipo de raíz
+    """    
+    exponente = 1 / p
+    return round (n ** exponente, 3)
 
 
 def minkowski_distance(a, b, p=2):
@@ -19,7 +31,7 @@ def minkowski_distance(a, b, p=2):
         float: Minkowski distance between arrays a and b.
     """
 
-    # TODO
+    return (raiz(sum(pow(abs(x-y), p) for x, y in zip(a, b)), p))
 
 
 # k-Nearest Neighbors Model
