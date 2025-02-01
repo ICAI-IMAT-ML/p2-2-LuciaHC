@@ -31,7 +31,7 @@ def minkowski_distance(a, b, p=2):
         float: Minkowski distance between arrays a and b.
     """
 
-    return (raiz(np.sum(pow(np.abs(x-y), p) for x, y in zip(a, b)), p))
+    return (raiz(sum(pow(abs(x-y), p) for x, y in zip(a, b)), p))
 
 
 # k-Nearest Neighbors Model
@@ -94,11 +94,7 @@ class knn:
                     predictions.append(0)
                 else:
                     predictions.append(1)
-        return np.ndarray(predictions)
-                
-            
-
-
+        return np.array(predictions)
 
     def predict_proba(self, X):
         """
