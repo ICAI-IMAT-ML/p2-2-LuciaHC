@@ -266,16 +266,16 @@ def evaluate_classification_metrics(y_true, y_pred, positive_label):
     accuracy = (tp + tn)/ (tp + tn + fp + fn)
 
     # Precision
-    precision = tp / (tp + fp)
+    precision = tp / (tp + fp) if tp + fp > 0 else 0.0
 
     # Recall (Sensitivity)
-    recall = tp / (tp + fn)
+    recall = tp / (tp + fn) if tp + fn > 0 else 0.0
 
     # Specificity
-    specificity = tn / (tn + fp)
+    specificity = tn / (tn + fp) if tn + fp > 0 else 0.0
 
     # F1 Score
-    f1 = 2 * (precision * recall) / (precision + recall)
+    f1 = 2 * (precision * recall) / (precision + recall) if precision + recall > 0 else 0.0
 
     return {
         "Confusion Matrix": [tn, fp, fn, tp],
