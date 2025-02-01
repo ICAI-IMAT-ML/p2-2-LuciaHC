@@ -145,8 +145,7 @@ class knn:
             You might want to check the np.argsort function.
         """
         ordered_index = np.argsort(distances)[:self.k]
-        indices = [self.y_train[i] for i in ordered_index]
-        return np.array(indices)
+        return np.array(ordered_index)
 
 
     def most_common_label(self, knn_labels: np.ndarray) -> int:
