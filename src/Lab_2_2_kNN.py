@@ -109,7 +109,19 @@ class knn:
         Returns:
             np.ndarray: Predicted class probabilities.
         """
-        # TODO
+        probabilities = []
+        for xi in X:
+            distances = list()
+            for i in range(len(self.x_train)):
+                distances.append((minkowski_distance(xi,self.x_train[i],self.p),self.y_train[i]))
+            distances = sorted(distances)[:self.k]
+            k_nn = [y for _,y in distances]
+            NO_count, YES_count = k_nn.count(0),k_nn.count(1)
+            if  NO_count >= YES_count:
+                probabilities.append(NO_count/self.k)
+            else:
+                probabilities.append(YES_count/self.k)
+        return np.array(probabilities)
 
     def compute_distances(self, point: np.ndarray) -> np.ndarray:
         """Compute distance from a point to every point in the training dataset
