@@ -88,10 +88,8 @@ class knn:
             distances = [minkowski_distance(xi,self.x_train[i],self.p) for i in range(len(self.x_train))]
             ordered_index = np.argsort(distances)[:self.k]
             k_nn = [self.y_train[i] for i in ordered_index]
-            if k_nn.count(0) >= k_nn.count(1):
-                predictions.append(0)
-            else:
-                predictions.append(1)
+            index = np.argmax(k_nn)
+            predictions.append(k_nn[index])
         return np.array(predictions)
 
     def predict_proba(self, X):
@@ -259,22 +257,33 @@ def evaluate_classification_metrics(y_true, y_pred, positive_label):
     y_pred_mapped = np.array([1 if label == positive_label else 0 for label in y_pred])
 
     # Confusion Matrix
-    # TODO
+    tn,fp,fn,tp = 0, 0, 0, 0  
+    for i in range(len(y_true_mapped)):
+        if y_true_mapped[i] == y_pred_mapped[i]:
+            if y_pred_mapped[i] == 1:
+                tp += 1
+            else:
+                tn += 1
+        else:
+            if y_pred_mapped[i] == 1:
+                fp += 1
+            else:
+                fn += 1
 
     # Accuracy
-    # TODO
+    accuracy = (tp + tn)/ (tp + tn + fp + fn)
 
     # Precision
-    # TODO
+    precision = tp / (tp + fp)
 
     # Recall (Sensitivity)
-    # TODO
+    recall = tp / (tp + fn)
 
     # Specificity
-    # TODO
+    specificity = tn / (tn + fp)
 
     # F1 Score
-    # TODO
+    f1 = 2 * (precision * recall) / (precision + recall)
 
     return {
         "Confusion Matrix": [tn, fp, fn, tp],
