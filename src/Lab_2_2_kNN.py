@@ -322,8 +322,7 @@ def plot_calibration_curve(y_true, y_probs, positive_label, n_bins=10):
         # Vemos que datos estan en ese bin
         bin_mask = (y_probs >= bin_edges[i]) & (y_probs < bin_edges[i + 1])
         bin_true_labels = y_true_mapped[bin_mask]
-        
-        # Calculate the fraction of positives (true outcomes) in this bin
+
         true_proportion = np.mean(bin_true_labels == positive_label) if len(bin_true_labels) > 0 else np.nan
         true_proportions.append(true_proportion)
 
@@ -335,10 +334,9 @@ def plot_calibration_curve(y_true, y_probs, positive_label, n_bins=10):
     plt.title("Calibration Curve")
     plt.xlabel("Mean predicted probability")
     plt.ylabel("Fraction of positives")
-    plt.legend(loc='lower right')
+    plt.legend(loc='best')
     plt.grid(True)
     plt.show()
-
 
     return {"bin_centers": bin_centers, "true_proportions": true_proportions}
 
@@ -369,7 +367,18 @@ def plot_probability_histograms(y_true, y_probs, positive_label, n_bins=10):
                 Array of predicted probabilities for the negative class.
 
     """
-    # TODO
+    y_true_mapped = np.array([1 if label == positive_label else 0 for label in y_true])
+
+    plt.figure(figsize=(10, 6))
+    plt.hist(y_probs[y_true_mapped == 1], bins=n_bins, alpha=0.6, color='g', label='Positive Class', edgecolor='black')
+    plt.hist(y_probs[y_true_mapped == 0], bins=n_bins, alpha=0.6, color='r', label='Negative Class', edgecolor='black')
+
+    plt.title('Probability Histograms for Positive and Negative Classes')
+    plt.xlabel('Predicted Probability')
+    plt.ylabel('Frequency')
+    plt.legend(loc='best')
+
+    plt.show()
 
     return {
         "array_passed_to_histogram_of_positive_class": y_probs[y_true_mapped == 1],
