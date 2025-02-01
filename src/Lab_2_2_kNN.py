@@ -117,10 +117,7 @@ class knn:
             distances = sorted(distances)[:self.k]
             k_nn = [y for _,y in distances]
             NO_count, YES_count = k_nn.count(0),k_nn.count(1)
-            if  NO_count >= YES_count:
-                probabilities.append(NO_count/self.k)
-            else:
-                probabilities.append(YES_count/self.k)
+            probabilities.append((YES_count/self.k,NO_count/self.k))
         return np.array(probabilities)
 
     def compute_distances(self, point: np.ndarray) -> np.ndarray:
