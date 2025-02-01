@@ -88,12 +88,12 @@ class knn:
             distances = list()
             for i in range(len(self.x_train)):
                 distances.append((minkowski_distance(xi,self.x_train[i],self.p),self.y_train[i]))
-                distances = sorted(distances)[:self.k]
-                k_nn = [y for _,y in distances]
-                if k_nn.count(0) >= k_nn.count(1):
-                    predictions.append(0)
-                else:
-                    predictions.append(1)
+            distances = sorted(distances)[:self.k]
+            k_nn = [y for _,y in distances]
+            if k_nn.count(0) >= k_nn.count(1):
+                predictions.append(0)
+            else:
+                predictions.append(1)
         return np.array(predictions)
 
     def predict_proba(self, X):
