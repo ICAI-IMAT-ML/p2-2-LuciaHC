@@ -129,7 +129,8 @@ class knn:
         Returns:
             np.ndarray: distance from point to each point in the training dataset.
         """
-        # TODO
+        distances = [minkowski_distance(point,self.x_train[i],self.p) for i in range(len(self.x_train))]
+        return np.array(distances)
 
     def get_k_nearest_neighbors(self, distances: np.ndarray) -> np.ndarray:
         """Get the k nearest neighbors indices given the distances matrix from a point.
@@ -143,7 +144,10 @@ class knn:
         Hint:
             You might want to check the np.argsort function.
         """
-        # TODO
+        ordered_index = np.argsort(distances)[:self.k]
+        indices = [self.y_train[i] for i in ordered_index]
+        return np.array(indices)
+
 
     def most_common_label(self, knn_labels: np.ndarray) -> int:
         """Obtain the most common label from the labels of the k nearest neighbors
