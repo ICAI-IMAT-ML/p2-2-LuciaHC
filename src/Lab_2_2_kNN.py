@@ -113,7 +113,7 @@ class knn:
             ordered_index = np.argsort(distances)[:self.k]
             k_nn = [self.y_train[i] for i in ordered_index]
             NO_count, YES_count = k_nn.count(0),k_nn.count(1)
-            probabilities.append((YES_count/self.k,NO_count/self.k))
+            probabilities.append((NO_count/self.k,YES_count/self.k))
         return np.array(probabilities)
 
     def compute_distances(self, point: np.ndarray) -> np.ndarray:
@@ -418,10 +418,10 @@ def plot_roc_curve(y_true, y_probs, positive_label):
     for threshold in thresholds:
         predictions = (y_probs >= threshold).astype(int)
 
-        tp = np.sum((predictions == 1) & (y_true_mapped == 1))
-        fp = np.sum((predictions == 1) & (y_true_mapped == 0))
-        tn = np.sum((predictions == 0) & (y_true_mapped == 0))
-        fn = np.sum((predictions == 0) & (y_true_mapped == 1))
+        tp = sum((predictions == 1) & (y_true_mapped == 1))
+        fp = sum((predictions == 1) & (y_true_mapped == 0))
+        tn = sum((predictions == 0) & (y_true_mapped == 0))
+        fn = sum((predictions == 0) & (y_true_mapped == 1))
 
         tpr.append(tp / (tp + fn) if (tp + fn) > 0 else 0)
         fpr.append(fp / (fp + tn) if (fp + tn) > 0 else 0)
