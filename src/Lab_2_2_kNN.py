@@ -257,18 +257,10 @@ def evaluate_classification_metrics(y_true, y_pred, positive_label):
     y_pred_mapped = np.array([1 if label == positive_label else 0 for label in y_pred])
 
     # Confusion Matrix
-    tn,fp,fn,tp = 0, 0, 0, 0  
-    for i in range(len(y_true_mapped)):
-        if y_true_mapped[i] == y_pred_mapped[i]:
-            if y_pred_mapped[i] == 1:
-                tp += 1
-            else:
-                tn += 1
-        else:
-            if y_pred_mapped[i] == 1:
-                fp += 1
-            else:
-                fn += 1
+    tp = sum((y_true_mapped == 1) & (y_pred_mapped == 1))
+    tn = sum((y_true_mapped == 0) & (y_pred_mapped == 0))
+    fp = sum((y_true_mapped == 0) & (y_pred_mapped == 1))
+    fn = sum((y_true_mapped == 1) & (y_pred_mapped == 0))
 
     # Accuracy
     accuracy = (tp + tn)/ (tp + tn + fp + fn)
