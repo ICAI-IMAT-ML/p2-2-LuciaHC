@@ -415,7 +415,7 @@ def plot_roc_curve(y_true, y_probs, positive_label):
 
     tpr, fpr = [], []
     for threshold in sorted_probs:
-        predictions = int((y_probs >= threshold))
+        predictions = (y_probs >= threshold).astype(int)
 
         tp = np.sum((predictions == 1) & (y_true_mapped == 1))
         fp = np.sum((predictions == 1) & (y_true_mapped == 0))
