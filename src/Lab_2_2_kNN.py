@@ -88,8 +88,10 @@ class knn:
             distances = [minkowski_distance(xi,self.x_train[i],self.p) for i in range(len(self.x_train))]
             ordered_index = np.argsort(distances)[:self.k]
             k_nn = [self.y_train[i] for i in ordered_index]
-            index = np.argmax(k_nn)
-            predictions.append(k_nn[index])
+            if k_nn.count(0) >= k_nn.count(1):
+                predictions.append(0)
+            else:
+                predictions.append(1)
         return np.array(predictions)
 
     def predict_proba(self, X):
