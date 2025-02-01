@@ -408,5 +408,31 @@ def plot_roc_curve(y_true, y_probs, positive_label):
             - "tpr": Array of True Positive Rates for each threshold.
 
     """
-    # TODO
+    y_true_mapped = np.array([1 if label == positive_label else 0 for label in y_true])
+
+    sorted_indices = np.argsort(y_probs)
+    sorted_probs = y_probs[sorted_indices]
+
+    tpr, fpr = [], []
+    for threshold in sorted_probs:
+        predictions = int((y_probs >= threshold))
+
+        tp = np.sum((predictions == 1) & (y_true_mapped == 1))
+        fp = np.sum((predictions == 1) & (y_true_mapped == 0))
+        tn = np.sum((predictions == 0) & (y_true_mapped == 0))
+        fn = np.sum((predictions == 0) & (y_true_mapped == 1))
+
+        tpr.append(tp / (tp + fn) if (tp + fn) > 0 else 0)
+        fpr.append(fp / (fp + tn) if (fp + tn) > 0 else 0)
+
+    plt.figure(figsize=(8, 6))
+    plt.plot(fpr, tpr, color='b', label='ROC Curve')
+    plt.plot([0, 1], [0, 1], color='r', linestyle='--', label = 'Random Classifier') 
+    plt.title('Receiver Operating Characteristic (ROC) Curve')
+    plt.xlabel('False Positive Rate (FPR)')
+    plt.ylabel('True Positive Rate (TPR)')
+    plt.legend(loc='best')
+    plt.grid(True)
+    plt.show()
+
     return {"fpr": np.array(fpr), "tpr": np.array(tpr)}
