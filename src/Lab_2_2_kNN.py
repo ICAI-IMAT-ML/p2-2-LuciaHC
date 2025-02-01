@@ -94,7 +94,7 @@ class knn:
                     predictions.append(0)
                 else:
                     predictions.append(1)
-        return predictions
+        return np.ndarray(predictions)
                 
             
 
