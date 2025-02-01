@@ -410,11 +410,10 @@ def plot_roc_curve(y_true, y_probs, positive_label):
     """
     y_true_mapped = np.array([1 if label == positive_label else 0 for label in y_true])
 
-    sorted_indices = np.argsort(y_probs)
-    sorted_probs = y_probs[sorted_indices]
+    thresholds = np.arange(0.0, 1.1, 0.1)
 
     tpr, fpr = [], []
-    for threshold in sorted_probs:
+    for threshold in thresholds:
         predictions = (y_probs >= threshold).astype(int)
 
         tp = np.sum((predictions == 1) & (y_true_mapped == 1))
@@ -436,3 +435,6 @@ def plot_roc_curve(y_true, y_probs, positive_label):
     plt.show()
 
     return {"fpr": np.array(fpr), "tpr": np.array(tpr)}
+
+
+
